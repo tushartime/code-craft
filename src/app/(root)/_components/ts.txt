@@ -1,0 +1,88 @@
+This `ThemeSelector` component is a theme-switching dropdown for a code editor, built using **React**, **Framer Motion**, **Tailwind CSS**, and a global state from `useCodeEditorStore`. Here’s a breakdown of the key functionalities, styles, and animations:
+
+---
+
+## 📌 **Main Functions**
+1. **Handles Theme Selection**  
+   - Fetches the current theme from `useCodeEditorStore` and updates it using `setTheme`.
+   - The selected theme is highlighted in the dropdown.
+
+2. **Dropdown Toggle & Click Outside Handling**  
+   - Clicking the button toggles the dropdown (`isOpen` state).
+   - Clicking outside the dropdown (`handleClickOutside`) closes it.
+
+3. **Handles Component Mounting**
+   - Uses `useEffect` to set `mounted = true`, ensuring no server-side rendering issues.
+   - Until mounted, returns `null` to prevent UI errors.
+
+---
+
+## 🎨 **CSS Styling (Tailwind Classes)**
+- **Button Styling (`motion.button`)**
+  ```tsx
+  className="w-48 group relative flex items-center gap-2 px-4 py-2.5 bg-[#1e1e2e]/80 hover:bg-[#262637] 
+  rounded-lg transition-all duration-200 border border-gray-800/50 hover:border-gray-700"
+  ```
+  - `w-48`: Fixed width.
+  - `group relative flex items-center gap-2`: Groups related elements inside.
+  - `bg-[#1e1e2e]/80`: Semi-transparent dark background.
+  - `hover:bg-[#262637]`: Slightly lighter background on hover.
+  - `border border-gray-800/50 hover:border-gray-700`: Border with hover effect.
+
+- **Theme List (`motion.div`)**
+  ```tsx
+  className="absolute top-full left-0 mt-2 w-full min-w-[240px] bg-[#1e1e2e]/95 
+  backdrop-blur-xl rounded-xl border border-[#313244] shadow-2xl py-2 z-50"
+  ```
+  - `absolute top-full left-0 mt-2`: Positioned below the button.
+  - `bg-[#1e1e2e]/95`: Dark semi-transparent background.
+  - `backdrop-blur-xl`: Blur effect behind the dropdown.
+  - `rounded-xl border border-[#313244] shadow-2xl`: Rounded corners and shadow for depth.
+
+- **Theme Option (`motion.button`)**
+  ```tsx
+  className={`relative group w-full flex items-center gap-3 px-3 py-2.5 
+  hover:bg-[#262637] transition-all duration-200 ${theme === t.id ? "bg-blue-500/10 text-blue-400" : "text-gray-300"}`}
+  ```
+  - Highlights the selected theme (`theme === t.id`).
+  - `hover:bg-[#262637]`: Background change on hover.
+  - `transition-all duration-200`: Smooth animation.
+
+---
+
+## 🔄 **Framer Motion Animations**
+**Button Hover & Click Effects**
+```tsx
+<motion.button
+  whileHover={{ scale: 1.02 }}  // Slight zoom-in on hover
+  whileTap={{ scale: 0.98 }}  // Slight press-in effect
+>
+```
+
+**Dropdown Animation (Appear & Disappear)**
+```tsx
+<motion.div
+  initial={{ opacity: 0, y: 8, scale: 0.96 }} // Start slightly lower and faded
+  animate={{ opacity: 1, y: 0, scale: 1 }} // Smoothly move up and appear
+  exit={{ opacity: 0, y: 8, scale: 0.96 }} // Fade out and drop slightly
+  transition={{ duration: 0.2 }}
+>
+```
+
+**Active Theme Indicator**
+```tsx
+<motion.div
+  className="absolute inset-0 border-2 border-blue-500/30 rounded-lg"
+  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+/>
+```
+- `spring` animation with **bouncing effect** for smooth movement.
+
+---
+
+### 🎯 **Final Summary**
+- **Theme switching dropdown** with **animated appearance & selection effects**.
+- **Tailwind CSS** for styling with **hover, transitions, and gradients**.
+- **Framer Motion** for **smooth animations** on hover, selection, and dropdown visibility.
+
+Would you like me to tweak anything, such as adding **icons, hover effects, or a different animation style**? 🚀
